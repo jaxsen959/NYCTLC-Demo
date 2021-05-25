@@ -1,9 +1,10 @@
 package com.nwcd.bigdata
 
+import java.lang
 import java.text.SimpleDateFormat
 import java.util.{Date, Properties, TimeZone}
 
-import com.alibaba.fastjson.{JSON, JSONObject}
+import com.alibaba.fastjson.{JSON, JSONException, JSONObject}
 import kafka.serializer.StringDecoder
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
@@ -16,6 +17,10 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.elasticsearch.search.aggregations.support.format.ValueParser.DateTime
 import org.json4s.DefaultFormats
 import org.json4s.jackson.Serialization
+import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.spark.sql.{SaveMode, SparkSession}
+import org.apache.spark.streaming.kafka010._
 
 
 object RealTimeETLApp {
@@ -54,6 +59,17 @@ object RealTimeETLApp {
       println("kafka producer init done!")
       ssc.sparkContext.broadcast(KafkaSink[String, String](kafkaProducerConfig))
     }
+
+    // 配置sparkSession
+    val sparkSession = SparkSession.builder()
+      .config(conf)
+      .enableHiveSupport()
+      .getOrCreate()
+    import sparkSession.implicits._
+    HiveUtil.openDynamicPartition(sparkSession) //开启动态分区
+    HiveUtil.setMaxpartitions(sparkSession) //设置最大分区数
+    HiveUtil.openCompression(sparkSession) //开启压缩
+    HiveUtil.useSnappyCompression(sparkSession) //使用snappy压缩
 
     //创建DS
     val getkafkaDS: InputDStream[(String, String)] = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](
@@ -113,7 +129,7 @@ object RealTimeETLApp {
       }
     }
 
-    //输出到kafka再到S3
+    //输出到kafka再写入S3
     mapDS.foreachRDD(rdd => {
       if (!rdd.isEmpty) {
         rdd.foreach(line => {
@@ -131,7 +147,24 @@ object RealTimeETLApp {
       }
     })
 
-    // 批量写入ES
+    // 引入对象实例中的隐式转换
+    import sparkSession.implicits._
+    // 写入hive
+    val dataframeData = mapDS
+      .foreachRDD(
+        rdd =>
+          rdd
+            .toDF("vendorID", "puDT", "doDT", "diffDT", "distance", "avgSpeed", "puLID", "doLID", "ts")
+            .coalesce(1)
+            .write
+            .mode(SaveMode.Append)
+            .insertInto("SparkStreaming2Hive")
+      )
+
+    sparkSession.sql("select * from SparkStreaming2Hive").show()
+    sparkSession.sql("insert into SparkStreaming2Hive select * from tmptable")
+
+    // 写入ES
     val startLogInfoDStream: DStream[JSONObject] = mapDS.map { line =>
       val content = Serialization.write(line)(DefaultFormats)
       val startupJSONObj: JSONObject = JSON.parseObject(content)

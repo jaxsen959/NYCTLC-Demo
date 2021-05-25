@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ebe79ff7-d4e5-416f-86af-bac58be5a922" name="Default Changelist" comment="" />
+    <list default="true" id="ebe79ff7-d4e5-416f-86af-bac58be5a922" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/com/nwcd/bigdata/RealTimeETLApp.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/com/nwcd/bigdata/RealTimeETLApp.scala" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +20,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -36,7 +43,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="true" />
@@ -55,7 +64,7 @@
       <recent name="D:\workspace\IdeaProjects\Demo\src\main\java\com\nwcd\bigdata" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PutS3Object">
+  <component name="RunManager" selected="Application.GetS3Object">
     <configuration name="EsUtil" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.nwcd.bigdata.EsUtil" />
       <module name="Demo" />
@@ -157,6 +166,8 @@
       <workItem from="1621783359382" duration="199000" />
       <workItem from="1621783719266" duration="827000" />
       <workItem from="1621863283324" duration="27000" />
+      <workItem from="1621864816168" duration="1070000" />
+      <workItem from="1621905996248" duration="7401000" />
     </task>
     <servers />
   </component>
@@ -188,22 +199,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="269" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621697047376" />
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom" timestamp="1621863309745">
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom" timestamp="1621913993483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621863309745" />
-    <state width="1877" height="235" key="GridCell.Tab.0.center" timestamp="1621863309745">
+    <state width="1877" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621913993483" />
+    <state width="1877" height="235" key="GridCell.Tab.0.center" timestamp="1621913993483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621863309745" />
-    <state width="1877" height="235" key="GridCell.Tab.0.left" timestamp="1621863309745">
+    <state width="1877" height="235" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621913993483" />
+    <state width="1877" height="235" key="GridCell.Tab.0.left" timestamp="1621913993482">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621863309745" />
-    <state width="1877" height="235" key="GridCell.Tab.0.right" timestamp="1621863309745">
+    <state width="1877" height="235" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621913993482" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right" timestamp="1621913993483">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="235" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621863309745" />
+    <state width="1877" height="235" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621913993483" />
     <state x="463" y="165" key="SettingsEditor" timestamp="1621697802151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
