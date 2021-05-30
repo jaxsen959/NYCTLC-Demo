@@ -1,0 +1,2 @@
+trend_pu_vo_LR.py: Use the linear_model of the sklearn library to implement linear regression for trend analysis.
+trend_pu_vo_LR_LSM.py:Based on least square method to implement linear regression  for trend analysis.
