@@ -17,12 +17,12 @@ def get_data(file_name):
 def calculate_work(x_data, y_data):  # 回归方程中b0、b1的求解
     x_mean = np.mean(x_data)
     y_mean = np.mean(y_data)
-    x1 = x_data - x_mean
-    y1 = y_data - y_mean
-    s = x1 * y1
-    u = x1 * x1
-    b1 = np.sum(s) / np.sum(u)
-    b0 = y_mean - b1 * x_mean
+    A = np.dot(x_data,x_data)
+    B = np.sum(x_data)
+    C = np.dot(x_data,y_data)
+    D = np.sum(y_data)
+    b1 = (C-x_mean*D)/(A-x_mean*B) #k
+    b0 = y_mean - b1 * x_mean #b
     return b1, b0
 
 
