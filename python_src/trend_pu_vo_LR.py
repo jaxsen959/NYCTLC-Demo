@@ -23,8 +23,8 @@ def linear_model_main(X_parameters, Y_parameters, predict_value):
     regr.fit(X_parameters, Y_parameters)
     predict_outcome = regr.predict(predict_value)
     predictions = {}
-    predictions['intercept'] = regr.intercept_
-    predictions['coefficient'] = regr.coef_
+    predictions['intercept'] = regr.intercept_ #截距b
+    predictions['coefficient'] = regr.coef_ #斜率k
     predictions['predicted_value'] = predict_outcome
     return predictions
 
