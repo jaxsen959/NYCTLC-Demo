@@ -25,8 +25,6 @@ public class GetS3Object {
         Properties kafkaProps = new Properties();
         // 指定broker（这里指定了2个，1个备用），如果你是集群更改主机名即可，如果不是只写运行的主机名
         kafkaProps.put("bootstrap.servers", "hadoop102:9092,hadoop103:9092,hadoop104:9092");
-//        kafkaProps.put("group.id", "CountryCounter");	// 消费者群组
-        // 设置序列化（自带的StringSerializer，如果消息的值为对象，就需要使用其他序列化方式，如Avro ）
         // key序列化
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         // value序列化

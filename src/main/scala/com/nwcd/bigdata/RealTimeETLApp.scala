@@ -65,7 +65,6 @@ object RealTimeETLApp {
       .config(conf)
       .enableHiveSupport()
       .getOrCreate()
-    import sparkSession.implicits._
     HiveUtil.openDynamicPartition(sparkSession) //开启动态分区
     HiveUtil.setMaxpartitions(sparkSession) //设置最大分区数
     HiveUtil.openCompression(sparkSession) //开启压缩
@@ -74,13 +73,11 @@ object RealTimeETLApp {
     //创建DS
     val getkafkaDS: InputDStream[(String, String)] = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](
       ssc, kafkaParams, Set(topic_get))
-//    val producer: KafkaProducer[String, String] = createKafkaProducer
 
     //原始数据 msg
 //    num 1:VendorID,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,RatecodeID,store_and_fwd_flag,PULocationID,DOLocationID,payment_type,fare_amount,extra,mta_tax,tip_amount,tolls_amount,improvement_surcharge,total_amount,congestion_surcharge
 //    num 1:1,2020-01-01 00:28:15,2020-01-01 00:33:03,1,1.20,1,N,238,239,1,6,3,0.5,1.47,0,0.3,11.27,2.5
-//    num 1:1,2020-01-01 00:35:39,2020-01-01 00:43:04,1,1.20,1,N,239,238,1,7,3,0.5,1.5,0,0.3,12.3,2.5
-//    ……
+
     //从kafka的kv值中取value即上述msg
     val dataDS: DStream[String] = getkafkaDS.map(_._2)
 
@@ -106,7 +103,6 @@ object RealTimeETLApp {
         val fields: Array[String] = line.split(",")
 
         var dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"))
         var puDT: Date = dateFormat.parse(fields(1))
         var doDT: Date = dateFormat.parse(fields(2))
         var diffDT: Int = ((doDT.getTime - puDT.getTime) / (1000 * 60)).asInstanceOf[Int]
@@ -147,7 +143,7 @@ object RealTimeETLApp {
       }
     })
 
-    // 引入对象实例中的隐式转换
+    // 隐式转换
     import sparkSession.implicits._
     // 写入hive
     val dataframeData = mapDS
@@ -160,9 +156,6 @@ object RealTimeETLApp {
             .mode(SaveMode.Append)
             .insertInto("SparkStreaming2Hive")
       )
-
-    sparkSession.sql("select * from SparkStreaming2Hive").show()
-    sparkSession.sql("insert into SparkStreaming2Hive select * from tmptable")
 
     // 写入ES
     val startLogInfoDStream: DStream[JSONObject] = mapDS.map { line =>
